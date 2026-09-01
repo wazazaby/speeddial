@@ -68,6 +68,19 @@ func TestReachableStates(t *testing.T) {
 	}
 }
 
+// Page 7: an up from cleared leaves the upper disk on a multiple of 72°, the
+// right disk 24° past one, the left disk 24° short of one, and the lower alone.
+func TestAngles(t *testing.T) {
+	var cleared State
+	if got := cleared.Angles(); got != (Angles{}) {
+		t.Errorf("cleared lock: got %+v, want every disk at 0°", got)
+	}
+	want := Angles{Top: 72, Right: 24, Bottom: 0, Left: 48}
+	if got := Hash(Up).Angles(); got != want {
+		t.Errorf("after up: got %+v, want %+v", got, want)
+	}
+}
+
 // A preset combination, and what else opens on it.
 func TestCollisions(t *testing.T) {
 	preset := Hash(Right, Down, Down, Left)
