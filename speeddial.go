@@ -74,9 +74,13 @@ func (s State) Apply(m Move) State {
 	return s
 }
 
-// Angle reports the rotation of the given disk, in degrees.
-func (s State) Angle(disk Move) int {
-	return int(s.pos[disk.dial]) * degreesPerStep
+// Angles is the rotation of each combination disk, in degrees.
+type Angles struct{ Top, Right, Bottom, Left int }
+
+// Angles reports how far each disk has turned since the lock was cleared.
+func (s State) Angles() Angles {
+	deg := func(disk uint8) int { return int(s.pos[disk]) * degreesPerStep }
+	return Angles{Top: deg(0), Right: deg(1), Bottom: deg(2), Left: deg(3)}
 }
 
 // advance turns the disk counter-clockwise to the next angle its driving pin

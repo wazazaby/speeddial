@@ -33,7 +33,7 @@ func TestUpperDiskTable(t *testing.T) {
 			knob Move
 			want int
 		}{{Right, row.right}, {Up, row.up}, {Left, row.left}, {Down, row.start}} {
-			if got := start.Apply(c.knob).Angle(Up); got != c.want {
+			if got := start.Apply(c.knob).Angles().Top; got != c.want {
 				t.Errorf("upper disk at %d°, knob %v: got %d°, want %d°", row.start, c.knob, got, c.want)
 			}
 		}
